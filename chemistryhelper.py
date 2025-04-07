@@ -1,5 +1,7 @@
 import streamlit as st
 from openai import OpenAI
+from groq import Groq
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 # ---- Page Config ----
 st.set_page_config(page_title="Chemistry Mnemonics", page_icon="🧪")
