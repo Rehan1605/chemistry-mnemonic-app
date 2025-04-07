@@ -70,5 +70,24 @@ if st.button("✨ Generate Mnemonic"):
                 # Copy button
                 st.code(mnemonic, language="markdown")
 
+                # Save to history
+                if "history" not in st.session_state:
+                    st.session_state.history = []
+                st.session_state.history.append({
+                    "question": user_input,
+                    "mnemonic": mnemonic
+                })
+
         except Exception as e:
             st.error(f"❌ Oops, something went wrong:\n{e}")
+
+# ---- Show History in Sidebar ----
+with st.sidebar:
+    st.header("🧠 Mnemonic History")
+    if "history" in st.session_state and st.session_state.history:
+        for item in reversed(st.session_state.history):
+            st.markdown(f"**Q:** {item['question']}")
+            st.markdown(f"→ *{item['mnemonic']}*")
+            st.markdown("---")
+    else:
+        st.markdown("No mnemonics yet. Try generating one!")
