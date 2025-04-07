@@ -1,7 +1,5 @@
 import streamlit as st
-from openai import OpenAI
 from groq import Groq
-client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 # ---- Page Config ----
 st.set_page_config(page_title="Chemistry Mnemonics", page_icon="🧪")
@@ -36,9 +34,8 @@ if st.button("✨ Generate Mnemonic"):
         st.warning("⚠️ Please enter a topic/question.")
     else:
         try:
-            # Initialize OpenAI client with Groq
+            # Initialize Groq client
             client = Groq(api_key=st.secrets["GROQ_API_KEY"])
-            
 
             with st.spinner("🔍 Generating a clever mnemonic for you..."):
                 response = client.chat.completions.create(
