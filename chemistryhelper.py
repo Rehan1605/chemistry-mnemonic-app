@@ -37,10 +37,8 @@ if st.button("✨ Generate Mnemonic"):
     else:
         try:
             # Initialize OpenAI client with Groq
-            client = OpenAI(
-                api_key=st.secrets["GROQ_API_KEY"],
-                base_url="https://api.groq.com/openai/v1"
-            )
+            client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+            
 
             with st.spinner("🔍 Generating a clever mnemonic for you..."):
                 response = client.chat.completions.create(
