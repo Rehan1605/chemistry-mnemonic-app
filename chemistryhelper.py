@@ -11,8 +11,6 @@ st.markdown("<h1 style='text-align: center;'>🧪 Chemistry Mnemonic Helper</h1>
 st.markdown("<p style='text-align: center;'>Struggling with chemistry? Just ask, and get an easy mnemonic to remember it forever! ✨</p>", unsafe_allow_html=True)
 st.divider()
 
-
-
 # ---- Topic Input ----
 col1, col2 = st.columns([3, 1])
 with col1:
@@ -34,11 +32,13 @@ if topic_choice != "Choose a topic..." and not user_input:
 
 # ---- Generate Button ----
 if st.button("✨ Generate Mnemonic"):
-
+    if not user_input.strip():
+        st.warning("⚠️ Please enter a topic/question.")
+    else:
         try:
             # Initialize OpenAI client with Groq
             client = OpenAI(
-            
+                api_key=st.secrets["GROQ_API_KEY"],
                 base_url="https://api.groq.com/openai/v1"
             )
 
@@ -65,24 +65,5 @@ if st.button("✨ Generate Mnemonic"):
                 # Copy button
                 st.code(mnemonic, language="markdown")
 
-                # Save to history
-                if "history" not in st.session_state:
-                    st.session_state.history = []
-                st.session_state.history.append({
-                    "question": user_input,
-                    "mnemonic": mnemonic
-                })
-
         except Exception as e:
             st.error(f"❌ Oops, something went wrong:\n{e}")
-
-# ---- Show History in Sidebar ----
-with st.sidebar:
-    st.header("🧠 Mnemonic History")
-    if "history" in st.session_state and st.session_state.history:
-        for item in reversed(st.session_state.history):
-            st.markdown(f"**Q:** {item['question']}")
-            st.markdown(f"→ *{item['mnemonic']}*")
-            st.markdown("---")
-    else:
-        st.markdown("No mnemonics yet. Try generating one!")
