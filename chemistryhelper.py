@@ -11,8 +11,7 @@ st.markdown("<h1 style='text-align: center;'>🧪 Chemistry Mnemonic Helper</h1>
 st.markdown("<p style='text-align: center;'>Struggling with chemistry? Just ask, and get an easy mnemonic to remember it forever! ✨</p>", unsafe_allow_html=True)
 st.divider()
 
-# ---- API Key ----
-api_key = st.text_input("🔑 Enter your **Groq API Key**", type="password")
+
 
 # ---- Topic Input ----
 col1, col2 = st.columns([3, 1])
@@ -35,15 +34,11 @@ if topic_choice != "Choose a topic..." and not user_input:
 
 # ---- Generate Button ----
 if st.button("✨ Generate Mnemonic"):
-    if not api_key:
-        st.warning("⚠️ Please enter your Groq API key.")
-    elif not user_input.strip():
-        st.warning("⚠️ Please enter a topic/question.")
-    else:
+
         try:
             # Initialize OpenAI client with Groq
             client = OpenAI(
-                api_key=api_key,
+            
                 base_url="https://api.groq.com/openai/v1"
             )
 
